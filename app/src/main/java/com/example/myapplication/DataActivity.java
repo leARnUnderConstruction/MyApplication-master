@@ -9,22 +9,13 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -42,9 +33,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -343,11 +331,6 @@ public class DataActivity extends AppCompatActivity {
                         TableRow.LayoutParams.MATCH_PARENT));
                 serialNo.setGravity(Gravity.CENTER);
 
-//                email.setBackgroundColor(Color.parseColor("#ffffff"));
-//                email.setText(row.getTableEmailEmailAddress());
-//                email.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.MATCH_PARENT));
-//                email.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
             }
 
@@ -378,8 +361,7 @@ public class DataActivity extends AppCompatActivity {
 
             //final Button edit = new Button(this);
             edit.setPadding(0, 15, 0, 15);
-//            edit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                    TableRow.LayoutParams.WRAP_CONTENT));
+
             if (i == -1) {
                 edit.setText("ACTION");
                 edit.setPadding(0, 15, 0, 15);
@@ -398,14 +380,6 @@ public class DataActivity extends AppCompatActivity {
                 edit.setBackgroundColor(Color.parseColor("#C0C0C0"));
 
                 edit.setGravity(Gravity.CENTER);
-//                edit.setGravity(Gravity.CENTER);
-//                edit.setText("EDIT");
-//                edit.setPadding(0, 15, 0, 15);
-//                edit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                edit.setTextColor(Color.parseColor("#FF0F0F0F"));
-//                edit.setBackgroundColor(Color.parseColor("#f0f0f0"));
-//                edit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT));
 
                 final int j = i;
                 edit.setOnClickListener(new View.OnClickListener() {
@@ -438,7 +412,7 @@ public class DataActivity extends AppCompatActivity {
 
                             }
                         });
-                        //updateData(row.getTableEmailEmailAddress(),row.getIdtableEmail());
+
                     }
                 });
             }
@@ -456,13 +430,7 @@ public class DataActivity extends AppCompatActivity {
                 delete.setBackgroundColor(Color.parseColor("#808080"));
 
                 delete.setGravity(Gravity.CENTER);
-//                final Button delete = new Button(this);
-//                delete.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//
-//                delete.setGravity(Gravity.CENTER);
-//                delete.setText("delete");
-//                delete.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
 
                 delete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -487,24 +455,14 @@ public class DataActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int id) {
                                         //  Action for 'NO' Button
                                         dialog.dismiss();
-                                        Intent i = new Intent(DataActivity.this, DataActivity.class);
-                                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(i);
-                                        finish();
                                     }
                                 });
                         //Creating dialog box
                         AlertDialog alert = builder.create();
                         //Setting the title manually
-                        alert.setTitle("AlertDialogExample");
+                        alert.setTitle("Confirm");
                         alert.show();
-//                        int id=returnDataList.get(j).getIdtableEmail();
-//                            deleteData(id);
-//
-//                        Intent i = new Intent(DataActivity.this, DataActivity.class);
-//                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(i);
-//                        finish();
+
 
 
                     }
