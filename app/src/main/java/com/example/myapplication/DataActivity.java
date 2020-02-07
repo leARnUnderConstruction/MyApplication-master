@@ -48,8 +48,8 @@ public class DataActivity extends AppCompatActivity {
     private View alertLayout;
     private Button addNewButton;
     private List<ReturnData> returnDataList = new ArrayList<>();
-    public Button dialogBoxButton;
-    EditText dialogEmail;
+    private Button dialogBoxButton;
+    private EditText dialogEmail;
 
     AlertDialog.Builder builder;
 
@@ -61,11 +61,12 @@ public class DataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
 
-        LayoutInflater inflater = getLayoutInflater();
-        alertLayout = inflater.inflate(R.layout.layout_custom_dialog, null);
-        dialogEmail = alertLayout.findViewById(R.id.dialog_email);
+//        LayoutInflater inflater = getLayoutInflater();
+//        alertLayout = inflater.inflate(R.layout.layout_custom_dialog,null);
+//        dialogEmail = alertLayout.findViewById(R.id.dialog_email);
         addNewButton = (Button)findViewById(R.id.addnew);
-        dialogBoxButton = (Button)alertLayout.findViewById(R.id.dialog_submit);
+//        dialogBoxButton = (Button)alertLayout.findViewById(R.id.dialog_submit);
+
         mProgressBar = new ProgressDialog(this);
         // setup the table
         mTableLayout = (TableLayout) findViewById(R.id.table_response);
@@ -86,13 +87,19 @@ public class DataActivity extends AppCompatActivity {
         addNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LayoutInflater inflater = getLayoutInflater();
+        alertLayout = inflater.inflate(R.layout.layout_custom_dialog,null);
+        dialogEmail = alertLayout.findViewById(R.id.dialog_email);
+                dialogBoxButton = (Button)alertLayout.findViewById(R.id.dialog_submit);
                 AlertDialog.Builder alert = new AlertDialog.Builder(addNewButton.getContext());
 
                 // this is set the view from XML inside AlertDialog
                 alert.setView(alertLayout);
                 // disallow cancel of AlertDialog on click of back button and outside touch
-                alert.setCancelable(false);
+                alert.setCancelable(true);
+
                 final AlertDialog dialog = alert.create();
+
                 dialog.show();
 
                 dialogBoxButton.setOnClickListener(new View.OnClickListener() {
@@ -100,15 +107,25 @@ public class DataActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String email = dialogEmail.getText().toString().trim();
                         Boolean validate = validateEmail(email);
-                        if(validate == Boolean.TRUE) {
+                        if(validate == Boolean.TRUE )
+                        {
                             insertData(email);
-                        }
-                        dialog.dismiss();
-                        Intent i = new Intent(DataActivity.this, DataActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
-                        finish();
 
+
+                            Intent i = new Intent(DataActivity.this, DataActivity.class );
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                            DataActivity.this.finish();
+                            finish();
+                        }
+                        if(dialogEmail.getText().toString().trim().isEmpty())
+                        {
+                            dialog.dismiss();
+//                            Toast.makeText(getApplicationContext(),"Field is empty",Toast.LENGTH_LONG).show();
+
+
+
+                        }
                     }
                 });
 
@@ -191,7 +208,7 @@ public class DataActivity extends AppCompatActivity {
             }
         });
 
-        MySingleton.getInstance(getApplicationContext()).addToRequestqueue(jsonObjectRequest);
+        MySingleton.getInstance(getApplicationContext()).addToRequestqueue(jsonObjectRequest);  //ye pdh lena hai.. gaand fatt jaegii
     }
 
     public void insertData(String email) {
@@ -247,7 +264,7 @@ public class DataActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
+                params.put("Content-Type", "application/json");   //Header k type set kr rh hai.. reference postman
                 return params;
             }
         };
@@ -382,16 +399,24 @@ public class DataActivity extends AppCompatActivity {
                 edit.setGravity(Gravity.CENTER);
 
                 final int j = i;
+                final ReturnData finalRow = row;
                 edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        AlertDialog.Builder alert = new AlertDialog.Builder(addNewButton.getContext());
+                        LayoutInflater inflater = getLayoutInflater();
+                        alertLayout = inflater.inflate(R.layout.layout_custom_dialog,null);
+                        dialogEmail = alertLayout.findViewById(R.id.dialog_email);
+                        dialogBoxButton = (Button)alertLayout.findViewById(R.id.dialog_submit);
+                        dialogEmail.setText(finalRow.getTableEmailEmailAddress());
+                        AlertDialog.Builder alert = new AlertDialog.Builder(edit.getContext());
 
                         // this is set the view from XML inside AlertDialog
+
+
+
                         alert.setView(alertLayout);
                         // disallow cancel of AlertDialog on click of back button and outside touch
-                        alert.setCancelable(false);
+                        alert.setCancelable(true);
 //
                         final AlertDialog dialog = alert.create();
                         dialog.show();
@@ -401,15 +426,19 @@ public class DataActivity extends AppCompatActivity {
                             public void onClick(View view) {
                                 String email = dialogEmail.getText().toString().trim();
                                 Boolean validate = validateEmail(email);
-                                if(validate == Boolean.TRUE) {
+                                if(validate == Boolean.TRUE || (!dialogEmail.getText().toString().trim().isEmpty())) {
                                     updateData(email, returnDataList.get(j).getIdtableEmail());
-                                }
-                                dialog.dismiss();
+
+
                                 Intent i = new Intent(DataActivity.this, DataActivity.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i);
                                 finish();
+                                }
 
+                                if(dialogEmail.getText().toString().trim().isEmpty()) {
+                                    dialog.dismiss();
+                                }
                             }
                         });
 
@@ -462,6 +491,7 @@ public class DataActivity extends AppCompatActivity {
                         //Setting the title manually
                         alert.setTitle("Confirm");
                         alert.show();
+                        alert.setCancelable(true);
 
 
 
